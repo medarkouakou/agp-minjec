@@ -22,4 +22,19 @@ class Welcome extends MX_Controller {
 	{
 	    $this->load->view('welcome_message');
 	}
+	
+	public function menu(){
+		//var_dump($this->session->userdata());
+		//exit;
+		if(isset($_SESSION['group_id']) and $_SESSION['group_id'] === 1){
+			$data['identity'] = $this->session->userdata('identity');
+			$this->load->view('theme/index', $data);
+		}else{
+			$this->index();
+		}
+	}
+	
+	public function creer_utilisateur(){
+		echo 'ok';
+	}
 }

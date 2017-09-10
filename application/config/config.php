@@ -17,7 +17,7 @@ $IP_ADDR = '192.168.1.2';
 | environments.
 |
 */
-$config['base_url'] = 'http://'.$IP_ADDR.'/blogfinal/';
+$config['base_url'] = 'http://'.$IP_ADDR.'/agp-minjec/';
 
 /*
 |--------------------------------------------------------------------------

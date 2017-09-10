@@ -55,11 +55,14 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
 		$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
+	
 		if ($this->form_validation->run() == true)
 		{
+			
 			// check to see if the user is logging in
 			// check for "remember me"
 			$remember = (bool) $this->input->post('remember');
+			
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
 				//if the login is successful
@@ -68,7 +71,7 @@ class Auth extends CI_Controller {
 				// if it admin rederect to admin home page 
 				if($this->ion_auth->is_admin()){
 					$this->session->set_userdata('group_id', 1);
-					redirect('index.php/users/auth', 'refresh');
+					redirect('index.php/welcome/menu', 'refresh');
 				}else{
 					// get group and redirect to corresponding group
 					$id = $this->ion_auth->get_user_id();
@@ -76,7 +79,7 @@ class Auth extends CI_Controller {
 						$group = $this->ion_auth->get_user_group($id); 
 						if((int)$group[0]["group_id"] === 2){
 							$this->session->set_userdata('group_id', 2);
-							redirect('index.php/blog/welcome', 'refresh');
+							redirect('index.php/welcome/menu', 'refresh');
 						}else{
 							$this->index();
 						}
@@ -93,7 +96,7 @@ class Auth extends CI_Controller {
 				// if the login was un-successful
 				// redirect them back to the login page
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('users/auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+				redirect('index.php/users/auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
 		else
@@ -435,7 +438,7 @@ class Auth extends CI_Controller {
 	public function create_user()
     {
         $this->data['title'] = $this->lang->line('create_user_heading');
-        $this->data['site_name'] = 'BLOG-MINJEC';
+        $this->data['site_name'] = 'AGP-MINJEC';
 
 
         /*if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
@@ -553,7 +556,8 @@ class Auth extends CI_Controller {
                $this->_render_page('users/auth/create_user_all', $this->data);
             }else{
 
-               $this->_render_page('users/auth/create_user', $this->data);
+				redirect('index.php/welcome/creer_utilisateur', 'refresh');
+              // $this->_render_page('users/auth/create_user', $this->data);
            }
         }
     }
